@@ -18,9 +18,7 @@ class LocalizedRouteServiceProvider extends ServiceProvider
     {
         $this->publishes([__DIR__.'/../config/localized-routes.php' => config_path('localized-routes.php')], 'config');
 
-        $this->app->booted(function () {
-            return app(LocalizedRouteProvider::class)->registerLocalizedRoutes();
-        });
+        $this->app->booted(fn () => app(LocalizedRouteProvider::class)->registerLocalizedRoutes());
     }
 
     /**

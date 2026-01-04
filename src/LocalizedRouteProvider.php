@@ -41,7 +41,7 @@ class LocalizedRouteProvider
 
         $route = $router->current();
 
-        if ($route && $canonical = $route->getAction('canonical')) {
+        if ($canonical = $route?->getAction('canonical')) {
             $route = $router->getByKey($canonical);
         }
 

@@ -41,14 +41,15 @@
         "localization"
     ],
     "require": {
-        "php": "^7.2.5 || ^8.0",
-        "illuminate/support": "^7.0|^8.0",
-        "illuminate/routing": "^7.0|^8.0",
-        "illuminate/http": "^7.0|^8.00"
+      "php": "^8.0",
+      "illuminate/support": "^9.0|^10.0|^11.0",
+      "illuminate/routing": "^9.0|^10.0|^11.0",
+      "illuminate/http": "^9.0|^10.0|^11.0",
+      "ramsey/collection": "^1.3|^2.0"
     },
     "require-dev": {
-      "phpunit/phpunit": "^7.0|^8.0",
-      "orchestra/testbench": "^5.0|^6.0"
+      "phpunit/phpunit": "^9.5|^10.0",
+      "orchestra/testbench": "^7.0|^8.0|^9.0"
     },
     "config": {
         "audit": {

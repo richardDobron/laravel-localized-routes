@@ -5,6 +5,7 @@ namespace richarddobron\LocalizedRoutes\Mixin;
 use Closure;
 use Illuminate\Routing\Route;
 use richarddobron\LocalizedRoutes\Contracts\LocalizedRoute as Localized;
+use richarddobron\LocalizedRoutes\Middleware\EnforceRouteLocale;
 
 /**
  * @mixin Localized&Route
@@ -13,11 +14,7 @@ class LocalizedRoute
 {
     public function locale(): Closure
     {
-        /**
-         * @param array|null $locales
-         * @return Route|array
-         */
-        return function (?array $locales = null) {
+        return function (?array $locales = null): Route|array {
             $locale = $this->action['locale'] ?? [];
 
             if (is_null($locales)) {
@@ -26,15 +23,11 @@ class LocalizedRoute
 
             $this->action['locale'] = collect([$locale, $locales])
                 ->flatMap(
-                    function ($set) {
-                        return collect($set)->mapWithKeys(
-                            function ($value, $key) {
-                                return is_int($key)
-                                    ? [$value => null]
-                                    : [$key => $value];
-                            }
-                        );
-                    }
+                    fn ($set) => collect($set)->mapWithKeys(
+                        fn ($value, $key) => is_int($key)
+                            ? [$value => null]
+                            : [$key => $value]
+                    )
                 )
                 ->all();
 

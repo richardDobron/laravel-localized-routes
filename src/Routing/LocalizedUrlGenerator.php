@@ -2,6 +2,7 @@
 
 namespace richarddobron\LocalizedRoutes\Routing;
 
+use BackedEnum;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
@@ -11,6 +12,10 @@ class LocalizedUrlGenerator extends UrlGenerator
 {
     public function route($name, $parameters = [], $absolute = true): string
     {
+        if ($name instanceof BackedEnum && ! is_string($name = $name->value)) {
+            throw new InvalidArgumentException('Attribute [name] expects a string backed enum.');
+        }
+
         $parameters = Arr::wrap($parameters);
         $locale = Arr::pull($parameters, 'locale', app()->getLocale());
 

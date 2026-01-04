@@ -18,9 +18,7 @@ class RoutingTest extends TestCase
         config(['localized-routes.locales' => ['es', 'de']]);
 
         Route::localeGroup([], function () {
-            Route::get('/example', function () {
-                return 'Hello, World!';
-            });
+            Route::get('/example', fn () => 'Hello, World!');
         });
 
         app(LocalizedRouteProvider::class)->registerLocalizedRoutes();
@@ -34,9 +32,7 @@ class RoutingTest extends TestCase
     {
         app(Translator::class)->addJsonPath(__DIR__ . '/../Support/lang');
 
-        Route::get('/example', function () {
-            return 'Hello, World!';
-        })
+        Route::get('/example', fn () => 'Hello, World!')
             ->locale(['es', 'de'])
             ->name('example');
 
@@ -54,9 +50,7 @@ class RoutingTest extends TestCase
 
         config(['localized-routes.prefix' => false]);
 
-        Route::get('/example', function () {
-            return 'Hello, World!';
-        })
+        Route::get('/example', fn () => 'Hello, World!')
             ->locale(['es'])
             ->name('example');
 
@@ -115,9 +109,7 @@ class RoutingTest extends TestCase
         Route::locale(['es', 'de'])
             ->domain('example.com')
             ->group(function () {
-                Route::get('/example', function () {
-                    return 'Hello, World!';
-                });
+                Route::get('/example', fn () => 'Hello, World!');
             });
 
         app(LocalizedRouteProvider::class)->registerLocalizedRoutes();
@@ -160,9 +152,7 @@ class RoutingTest extends TestCase
 
     public function test_register_localized_routes_is_idempotent(): void
     {
-        Route::get('/example', function () {
-            return 'Hello, World!';
-        })
+        Route::get('/example', fn () => 'Hello, World!')
             ->locale(['es', 'de'])
             ->name('example');
 
@@ -181,9 +171,7 @@ class RoutingTest extends TestCase
     public function test_localized_route_inherits_properties_from_canonical_route(): void
     {
         /** @var LocalizedRoute $canonical */
-        $canonical = Route::get('/example/{id}', function () {
-            return 'Hello, World!';
-        })
+        $canonical = Route::get('/example/{id}', fn () => 'Hello, World!')
             ->locale(['de' => 'beispiel/{id}'])
             ->where('id', '[0-9]+')
             ->defaults('id', 1);
