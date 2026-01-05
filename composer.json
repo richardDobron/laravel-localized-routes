@@ -52,7 +52,7 @@
     "require-dev": {
       "phpunit/phpunit": "^9.5|^10.0",
       "orchestra/testbench": "^7.0|^8.0|^9.0",
-      "friendsofphp/php-cs-fixer": "^3.92"
+      "friendsofphp/php-cs-fixer": "^3.55"
     },
     "config": {
         "audit": {
