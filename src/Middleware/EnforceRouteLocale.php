@@ -17,7 +17,7 @@ class EnforceRouteLocale
         $route = $request->route();
 
         if ($routeLocale = $route->getAction('locale')) {
-            if (! $routeName = $route->getAction('default_route')) {
+            if (! $routeName = $route->getAction('canonical_route')) {
                 $routeName = $route->getName();
                 $routeLocale = config('localized-routes.route_locale');
             }
