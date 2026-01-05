@@ -1,5 +1,7 @@
 <?php
 
+namespace richarddobron\LocalizedRoutes\Tests\Feature;
+
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Translation\Translator;

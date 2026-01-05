@@ -1,5 +1,11 @@
-.idea
-vendor
-composer.lock
-.phpunit.cache
+# IDE directory
+/.idea
+
+# Composer packages directory
+/vendor
+
+# Composer lock file
+/composer.lock
+
 .phpunit.result.cache
+.php-cs-fixer.cache

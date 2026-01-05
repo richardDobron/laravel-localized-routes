@@ -28,7 +28,7 @@ class EnforceRouteLocale
                 ]);
 
                 if ($query = $request->getQueryString()) {
-                    $correctUrl .= '?'.$query;
+                    $correctUrl .= '?' . $query;
                 }
 
                 if ($request->fullUrl() !== $correctUrl) {
