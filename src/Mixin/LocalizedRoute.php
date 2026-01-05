@@ -5,7 +5,6 @@ namespace richarddobron\LocalizedRoutes\Mixin;
 use Closure;
 use Illuminate\Routing\Route;
 use richarddobron\LocalizedRoutes\Contracts\LocalizedRoute as Localized;
-use richarddobron\LocalizedRoutes\Middleware\EnforceRouteLocale;
 
 /**
  * @mixin Localized&Route

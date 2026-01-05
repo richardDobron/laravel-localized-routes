@@ -36,9 +36,11 @@ class LocalizedRouteServiceProvider extends ServiceProvider
             $this->app->instance('routes', $routes);
 
             $url = new LocalizedUrlGenerator(
-                $routes, $app->rebinding('request', function ($app, $request) {
-                $app['url']->setRequest($request);
-            }));
+                $routes,
+                $app->rebinding('request', function ($app, $request) {
+                    $app['url']->setRequest($request);
+                })
+            );
 
             $url->setSessionResolver(function () {
                 return $this->app['session'];
