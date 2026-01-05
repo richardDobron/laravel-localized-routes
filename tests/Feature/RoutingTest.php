@@ -102,6 +102,28 @@ class RoutingTest extends TestCase
             'http://localhost/es/ejemplo',
             action(Controller::class, ['locale' => 'es'])
         );
+
+        config(['localized-routes.route_key' => 'l']);
+
+        $this->assertSame(
+            'http://localhost/example?locale=es',
+            route('example', ['locale' => 'es'])
+        );
+
+        $this->assertSame(
+            'http://localhost/example?locale=es',
+            action(Controller::class, ['locale' => 'es'])
+        );
+
+        $this->assertSame(
+            'http://localhost/es/ejemplo',
+            route('example', ['l' => 'es'])
+        );
+
+        $this->assertSame(
+            'http://localhost/es/ejemplo',
+            action(Controller::class, ['l' => 'es'])
+        );
     }
 
     public function test_generates_localized_domains(): void
