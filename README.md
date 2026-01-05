@@ -36,6 +36,7 @@ return [
         'it',
         // ...
     ],
+    'route_key' => 'locale',
     'route_locale' => 'en',
     'redirect_code' => 302,
 ];
@@ -92,12 +93,13 @@ This makes these URLs:
 
 You can customize the library with the following configuration options.
 
-| Option          | Description                                                           | Default |
-|-----------------|-----------------------------------------------------------------------|---------|
-| `prefix`        | Automatically prepends locale codes (`/de`, `/it`, etc.) to routes.   | `true`  |
-| `locales`       | List of supported locales.                                            | `[]`    |
-| `route_locale`  | Locale used for default routes.                                       | `en`    |
-| `redirect_code` | HTTP status code used for redirecting to the correct localized route. | `302`   |
+| Option          | Description                                                           | Default  |
+|-----------------|-----------------------------------------------------------------------|----------|
+| `prefix`        | Automatically prepends locale codes (`/de`, `/it`, etc.) to routes.   | `true`   |
+| `locales`       | List of supported locales.                                            | `[]`     |
+| `route_key`     | The route parameter key used for locale identification.               | `locale` |
+| `route_locale`  | Locale used for default routes.                                       | `en`     |
+| `redirect_code` | HTTP status code used for redirecting to the correct localized route. | `302`    |
 
 ## 🧪 Testing
 
