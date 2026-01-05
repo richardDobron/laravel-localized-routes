@@ -31,6 +31,8 @@ class LocalizedRouteProvider
             foreach ($route->translateRoutes() as $localizedRoute) {
                 $collection->add($localizedRoute);
             }
+
+            $collection->add($route);
         }
     }
 
