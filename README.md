@@ -36,6 +36,7 @@ return [
         'it',
         // ...
     ],
+    'route_locale' => 'en',
     'redirect_code' => 302,
 ];
 ```
@@ -104,5 +105,10 @@ You can customize the library with the following configuration options.
 $ composer tests
 ```
 
-## License
-This project is MIT licensed. See the [LICENSE](LICENSE) file for details.
+## 🤝 Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
