@@ -132,6 +132,22 @@ class RoutingTest extends TestCase
         );
     }
 
+    public function test_non_localized_routes_generate_with_locale_parameter(): void
+    {
+        Route::get('/home', Controller::class)
+            ->name('home');
+
+        $this->assertSame(
+            'http://localhost/home?locale=es',
+            route('home', ['locale' => 'es'])
+        );
+
+        $this->assertSame(
+            'http://localhost/home?locale=es',
+            action(Controller::class, ['locale' => 'es'])
+        );
+    }
+
     public function test_generates_localized_domains(): void
     {
         app(Translator::class)->addJsonPath(__DIR__ . '/../Support/lang');
