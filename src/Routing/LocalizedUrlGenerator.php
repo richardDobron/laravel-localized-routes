@@ -16,11 +16,12 @@ class LocalizedUrlGenerator extends UrlGenerator
             throw new InvalidArgumentException('Attribute [name] expects a string backed enum.');
         }
 
-        $parameters = Arr::wrap($parameters);
-        $locale = Arr::pull($parameters, config('localized-routes.route_key'), app()->getLocale());
-
         if (! is_null($route = $this->routes->getByName($name))) {
-            $route = $route->translateRoute($locale) ?? $route;
+            if ($route->locale()) {
+                $parameters = Arr::wrap($parameters);
+                $locale = Arr::pull($parameters, config('localized-routes.route_key'), app()->getLocale());
+                $route = $route->translateRoute($locale) ?? $route;
+            }
 
             return $this->toRoute($route, $parameters, $absolute);
         }
@@ -39,10 +40,12 @@ class LocalizedUrlGenerator extends UrlGenerator
             throw new InvalidArgumentException("Action {$action} not defined.");
         }
 
-        $parameters = Arr::wrap($parameters);
-        $locale = Arr::pull($parameters, config('localized-routes.route_key'), app()->getLocale());
+        if ($route->locale()) {
+            $parameters = Arr::wrap($parameters);
+            $locale = Arr::pull($parameters, config('localized-routes.route_key'), app()->getLocale());
 
-        $route = $route->translateRoute($locale) ?? $route;
+            $route = $route->translateRoute($locale) ?? $route;
+        }
 
         return $this->toRoute($route, $parameters, $absolute);
     }
