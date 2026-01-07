@@ -223,7 +223,9 @@ class RoutingTest extends TestCase
     {
         app(Translator::class)->addJsonPath(__DIR__ . '/../Support/lang');
 
-        Route::get('/example', fn () => 'Hello, World!')
+        Route::get('/example', function () {
+            return 'Hello, World!';
+        })
             ->locale(['es', 'de'])
             ->name('example');
 
@@ -233,7 +235,7 @@ class RoutingTest extends TestCase
 
         $this->assertStringStartsWith(
             'http://localhost/es/ejemplo?signature=',
-            $signedUrl,
+            $signedUrl
         );
 
         $this->get($signedUrl)->assertOk();
