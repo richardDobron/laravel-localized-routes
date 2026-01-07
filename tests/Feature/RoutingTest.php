@@ -4,6 +4,7 @@ namespace richarddobron\LocalizedRoutes\Tests\Feature;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Translation\Translator;
 use richarddobron\LocalizedRoutes\Contracts\LocalizedRoute;
 use richarddobron\LocalizedRoutes\Facades\LocalizedRoute as LocalizedRouteFacade;
@@ -206,6 +207,26 @@ class RoutingTest extends TestCase
             $count,
             app(Router::class)->getRoutes()->count()
         );
+    }
+
+    public function test_signed_route(): void
+    {
+        app(Translator::class)->addJsonPath(__DIR__ . '/../Support/lang');
+
+        Route::get('/example', fn () => 'Hello, World!')
+            ->locale(['es', 'de'])
+            ->name('example');
+
+        app(LocalizedRouteProvider::class)->registerLocalizedRoutes();
+
+        $signedUrl = URL::signedRoute('example', ['locale' => 'es']);
+
+        $this->assertStringStartsWith(
+            'http://localhost/es/ejemplo?signature=',
+            $signedUrl,
+        );
+
+        $this->get($signedUrl)->assertOk();
     }
 
     public function test_localized_route_inherits_properties_from_canonical_route(): void

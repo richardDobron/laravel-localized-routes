@@ -3,6 +3,7 @@
 namespace richarddobron\LocalizedRoutes;
 
 use Closure;
+use Illuminate\Contracts\Routing\UrlGenerator as UrlGeneratorContract;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
@@ -30,20 +31,28 @@ class LocalizedRouteServiceProvider extends ServiceProvider
 
         $this->app->singleton(LocalizedRouteProvider::class);
 
-        $this->app->singleton(LocalizedUrlGenerator::class, function (Application $app) {
+        $this->app->singleton('url', function (Application $app) {
             $routes = $app['router']->getRoutes();
 
-            $this->app->instance('routes', $routes);
+            $app->instance('routes', $routes);
 
-            $url = new LocalizedUrlGenerator(
+            return new LocalizedUrlGenerator(
                 $routes,
-                $app->rebinding('request', function ($app, $request) {
-                    $app['url']->setRequest($request);
-                })
+                $app->rebinding(
+                    'request',
+                    $this->requestRebinder()
+                ),
+                $app['config']['app.asset_url']
             );
+        });
 
+        $this->app->extend('url', function (UrlGeneratorContract $url, Application $app) {
             $url->setSessionResolver(function () {
-                return $this->app['session'];
+                return $this->app['session'] ?? null;
+            });
+
+            $url->setKeyResolver(function () {
+                return $this->app->make('config')->get('app.key');
             });
 
             $app->rebinding('routes', function ($app, $routes) {
@@ -52,8 +61,6 @@ class LocalizedRouteServiceProvider extends ServiceProvider
 
             return $url;
         });
-
-        $this->app->alias(LocalizedUrlGenerator::class, 'url');
 
         Router::mixin(new LocalizedRouter());
         Route::mixin(new LocalizedRoute());
