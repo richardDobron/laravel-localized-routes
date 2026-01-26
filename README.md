@@ -78,7 +78,7 @@ You can give different paths per language:
 ```php
 Route::get('/book/{sku}', function (string $sku) {
     return 'Book details ' . $sku;
-})->locale([
+})->name('book')->locale([
     'de' => 'buch/{sku}',
     'it',
 ]);

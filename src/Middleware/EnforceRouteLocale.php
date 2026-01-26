@@ -25,7 +25,7 @@ class EnforceRouteLocale
             if (! config('localized-routes.prefix') && $routeLocale !== $currentLocale) {
                 $correctUrl = route($routeName, [
                     config('localized-routes.route_key') => $currentLocale,
-                ]);
+                ] + $request->route()->parameters());
 
                 if ($query = $request->getQueryString()) {
                     $correctUrl .= '?' . $query;
