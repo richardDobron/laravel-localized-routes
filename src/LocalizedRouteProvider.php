@@ -26,6 +26,9 @@ class LocalizedRouteProvider
 
             $route->middleware(EnforceRouteLocale::class);
 
+            $locales = $route->locale();
+            $locales[config('localized-routes.route_locale')] = $route->uri();
+            $route->action['locales'] = $locales;
             $route->action['key'] = $route->getKey();
 
             foreach ($route->translateRoutes() as $localizedRoute) {

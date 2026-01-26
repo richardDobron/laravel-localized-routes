@@ -63,7 +63,7 @@ class LocalizedRoute
             }
             $uri = $locales[$locale];
 
-            $action = ['locale' => $locale, 'canonical' => $this->getKey()] + $this->action;
+            $action = ['locale' => $locale, 'locales' => $locales, 'canonical' => $this->getKey()] + $this->action;
 
             if (isset($action['as'])) {
                 $action['canonical_route'] = $action['as'];

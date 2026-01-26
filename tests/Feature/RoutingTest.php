@@ -244,4 +244,29 @@ class RoutingTest extends TestCase
         $this->assertSame(['id' => '[0-9]+'], $localized->wheres);
         $this->assertSame(['id' => 1], $localized->defaults);
     }
+
+    public function test_same_translation_route(): void
+    {
+        config([
+            'localized-routes.prefix' => false,
+            'localized-routes.route_locale' => 'cs',
+        ]);
+
+        Route::get('/kosik', fn () => 'Hello, World!')
+            ->locale($locales = [
+                'sk' => 'kosik',
+                'de' => 'warenkorb',
+            ])
+            ->name('cart');
+
+        app(LocalizedRouteProvider::class)->registerLocalizedRoutes();
+
+        foreach ($locales as $locale => $uri) {
+            app()->setLocale($locale);
+
+            $this->get($uri)->assertOk();
+
+            $this->assertSame($locale, app()->getLocale());
+        }
+    }
 }

@@ -36,9 +36,16 @@ class EnforceRouteLocale
                 }
             }
 
-            app()->setLocale($routeLocale);
+            $locales = $route->getAction('locales');
+            $sameRouteLocales = array_keys(array_filter($locales, function (?string $uri) use ($route) {
+                return $uri === $route->uri();
+            }));
 
-            $request->setLocale($routeLocale);
+            if (! in_array($routeLocale, $sameRouteLocales)) {
+                app()->setLocale($routeLocale);
+
+                $request->setLocale($routeLocale);
+            }
         }
 
         return $next($request);
