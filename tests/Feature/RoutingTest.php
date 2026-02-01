@@ -47,6 +47,36 @@ class RoutingTest extends TestCase
         }
     }
 
+    public function test_locale_group_routes(): void
+    {
+        app(Translator::class)->addJsonPath(__DIR__ . '/../Support/lang');
+
+        config(['localized-routes.locales' => ['es', 'de']]);
+
+        Route::localeGroup([
+            'locale' => [
+                'es' => 'acceso',
+                'de' => 'anmelden',
+            ],
+        ], function () {
+            Route::get('/login', fn () => 'Hello, World!')
+                ->name('example1');
+            Route::post('/login', fn () => 'Hello, World!')
+                ->name('example2');
+        });
+
+        app(LocalizedRouteProvider::class)->registerLocalizedRoutes();
+
+        foreach (['es' => '/es/acceso', 'de' => '/de/anmelden', 'en' => '/login'] as $locale => $url) {
+            app()->setLocale($locale);
+
+            $this->get($url)->assertOk();
+            $this->post($url)->assertOk();
+
+            $this->assertSame($locale, app()->getLocale());
+        }
+    }
+
     public function test_generates_localized_routes_without_prefix(): void
     {
         app(Translator::class)->addJsonPath(__DIR__ . '/../Support/lang');

@@ -23,10 +23,11 @@ class LocalizedRouter
     public function localeGroup(): Closure
     {
         return function (array $attributes, $routes) {
-            $attributes['locale'] = array_fill_keys(
-                $attributes['locale'] ?? config('localized-routes.locales'),
-                null
-            );
+            $attributes['locale'] = collect($attributes['locale'] ?? config('localized-routes.locales'))->mapWithKeys(
+                fn ($value, $key) => is_int($key)
+                    ? [$value => null]
+                    : [$key => $value]
+            )->all();
 
             $this->updateGroupStack($attributes);
 
